@@ -15,11 +15,6 @@ from datetime import datetime
 
 
 class EmployeeListCreateView(generics.ListCreateAPIView):
-    """
-    List all employees or create a new employee
-    GET: Returns list of all employees
-    POST: Creates a new employee with auto-generated Emp_id
-    """
     queryset = Employee.objects.all().order_by('-created_at')
     serializer_class = EmployeeSerializer
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
@@ -27,30 +22,18 @@ class EmployeeListCreateView(generics.ListCreateAPIView):
     ordering_fields = ['created_at', 'Full_name', 'Department']
     
     def perform_create(self, serializer):
-        """Save new employee with auto-generated ID"""
         serializer.save()
 
 
 class EmployeeDetailView(generics.RetrieveUpdateDestroyAPIView):
-    """
-    Retrieve, update, or delete a specific employee
-    GET: Returns employee details
-    PUT/PATCH: Updates employee information
-    DELETE: Deletes the employee
-    """
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
     lookup_field = 'pk'
 
 
 class AttendanceByDateView(APIView):
-    """
-    Get attendance records for a specific date
-    Query parameter: date (YYYY-MM-DD format)
-    """
     
     def get(self, request):
-        """Fetch attendance records for a specific date"""
         date_str = request.query_params.get('date')
         
         if not date_str:
@@ -84,19 +67,7 @@ class AttendanceByDateView(APIView):
 
 
 class BulkAttendanceCreateView(APIView):
-    """
-    Create or update attendance records in bulk
-    POST: Expects a list of attendance records
-    Each record should contain:
-    - id: employee id
-    - status: 'Present', 'Absent', or 'Leave'
-    - checkIn: time string in HH:MM AM/PM format (optional)
-    - attendance_date: date in YYYY-MM-DD format (optional, defaults to today)
-    - notes: optional notes
-    """
-    
     def post(self, request):
-        """Bulk create/update attendance records"""
         records = request.data if isinstance(request.data, list) else [request.data]
         
         # Validate each record
@@ -158,25 +129,15 @@ class BulkAttendanceCreateView(APIView):
 
 
 class EmployeeAttendanceHistoryView(APIView):
-    """
-    Get attendance history for a specific employee
-    Can fetch by employee ID or Emp_id (emp code)
-    
-    URL parameter: emp_id (can be employee ID or Emp_id code)
-    Query parameter: limit (optional, defaults to 30)
-    """
     
     def get(self, request, emp_id):
-        """Fetch employee details with attendance history"""
         try:
-            # Try to find employee by ID first, then by Emp_id
             employee = None
             try:
                 employee = Employee.objects.get(id=emp_id)
             except Employee.DoesNotExist:
                 employee = Employee.objects.get(Emp_id=emp_id)
             
-            # Get limit from query params
             limit = request.query_params.get('limit', 30)
             try:
                 limit = int(limit)
@@ -188,7 +149,6 @@ class EmployeeAttendanceHistoryView(APIView):
                 employee=employee
             ).order_by('-attendance_date')[:limit]
             
-            # Manually construct response to avoid serializer depth issues
             response_data = {
                 'employee': {
                     'id': employee.id,
