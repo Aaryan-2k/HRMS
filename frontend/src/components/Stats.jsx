@@ -13,13 +13,13 @@ export default function Stats(){
     const fetchStats = async () => {
         try {
             // Fetch total employees
-            const empResponse = await fetch('https://backend-hrms-1.onrender.com/api/employees/');
+            const empResponse = await fetch('http://localhost:8000/api/employees/');
             const empData = await empResponse.json();
             setTotalEmployees(empData.length);
 
             // Fetch attendance for today
             const today = new Date().toISOString().split('T')[0];
-            const attResponse = await fetch(`https://backend-hrms-1.onrender.com/api/attendance/by-date/?date=${today}`);
+            const attResponse = await fetch(`http://localhost:8000/api/attendance/by-date/?date=${today}`);
             const attData = await attResponse.json();
             
             const present = attData.filter(att => att.status === 'Present').length;

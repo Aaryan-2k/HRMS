@@ -18,7 +18,7 @@ export default function EmpAttendanceHistory(){
     const fetchEmployeeAttendanceHistory = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`https://backend-hrms-1.onrender.com/api/employees/${id}/attendance/`);
+            const response = await fetch(`http://localhost:8000/api/employees/${id}/attendance/`);
             if (!response.ok) {
                 throw new Error('Failed to fetch employee attendance history');
             }

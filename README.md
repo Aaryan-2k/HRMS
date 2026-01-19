@@ -1,5 +1,7 @@
 # HRMS - Human Resource Management System
 
+**🚀 Live App**: https://teal-souffle-ccc197.netlify.app/
+
 ## Project Overview
 
 HRMS is a comprehensive Human Resource Management System designed to streamline HR operations and employee management. The application provides features for employee information management, attendance tracking, and HR administration through an intuitive web interface.
@@ -18,7 +20,7 @@ HRMS is a comprehensive Human Resource Management System designed to streamline 
 ### Backend
 - **Framework**: Django 6.0.1
 - **API**: Django REST Framework 3.16.1
-- **Database**: PostgreSQL
+- **Database**: SQLite
 - **CORS Support**: Django CORS Headers 4.9.0
 - **Language**: Python 3.13
 
@@ -185,8 +187,6 @@ The `(env)` prefix will disappear from your terminal prompt.
 Once both servers are running, you can access:
 - **Frontend Application**: http://localhost:5173
 - **Backend API**: http://localhost:8000
-- **Django Admin Panel**: http://localhost:8000/admin
-
 ---
 
 ## Assumptions and Limitations
@@ -205,12 +205,6 @@ Once both servers are running, you can access:
 - **Authentication**: Basic authentication mechanisms may need enhancement for enterprise use
 - **Data Persistence**: SQLite database file (`db.sqlite3`) is stored locally; requires backup strategies for data safety
 
-### Known Considerations
-- CORS headers must be properly configured if frontend and backend are on different domains
-- Frontend and backend must run on the same machine or be properly configured for cross-origin requests
-- No built-in role-based access control (RBAC) is visible in the current structure; implement based on requirements
-
----
 
 ## Project Structure
 
@@ -232,23 +226,3 @@ HRMS/
 ├── env/                    # Python virtual environment
 └── README.md              # This file
 ```
-
----
-
-## Troubleshooting
-
-- **Port already in use**: Change the port using `python manage.py runserver 8001` or `npm run dev -- --port 5174`
-- **Module not found errors**: Ensure virtual environment is activated and dependencies are installed
-- **CORS errors**: Check Django CORS settings in `backend/hrms/settings.py`
-- **Database errors**: Run migrations again with `python manage.py migrate`
-
----
-
-## Future Enhancements
-
-- Implement role-based access control (RBAC)
-- Add advanced reporting and analytics
-- Integrate email notifications
-- Add file upload capabilities for documents
-- Implement real-time notifications
-- Deploy to production environment with PostgreSQL

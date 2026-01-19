@@ -38,7 +38,7 @@ export default function AttendancePage(){
     const fetchEmployees = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://backend-hrms-1.onrender.com/api/employees/');
+            const response = await fetch('http://localhost:8000/api/employees/');
             if (!response.ok) {
                 throw new Error('Failed to fetch employees');
             }
@@ -64,7 +64,7 @@ export default function AttendancePage(){
             const day = String(date.getDate()).padStart(2, '0');
             const dateStr = `${year}-${month}-${day}`;
             
-            const response = await fetch(`https://backend-hrms-1.onrender.com/api/attendance/by-date/?date=${dateStr}`);
+            const response = await fetch(`http://localhost:8000/api/attendance/by-date/?date=${dateStr}`);
             const savedAttendance = await response.json();
             
             const attendanceMap = {};
@@ -159,7 +159,7 @@ export default function AttendancePage(){
 
             console.log('Sending changed records:', attendanceData);
 
-            const response = await fetch('https://backend-hrms-1.onrender.com/api/attendance/', {
+            const response = await fetch('http://localhost:8000/api/attendance/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

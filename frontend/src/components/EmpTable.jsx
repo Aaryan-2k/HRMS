@@ -28,7 +28,7 @@ export default function Emptable({ employees = [], onEmployeeDeleted }){
 
         try {
             setDeleting(employeeId);
-            const response = await axios.delete(`https://backend-hrms-1.onrender.com/api/employees/${employeeId}/`);
+            const response = await axios.delete(`http://localhost:8000/api/employees/${employeeId}/`);
             if (response.status === 204 || response.status === 200) {
                 if (onEmployeeDeleted) {
                     onEmployeeDeleted();

@@ -54,7 +54,7 @@ export default function EmpAddForm({isOpen,onClose}){
         
         setLoading(true);
         try{
-            const response = await axios.post('https://backend-hrms-1.onrender.com/api/employees/', {
+            const response = await axios.post('http://localhost:8000/api/employees/', {
                 Full_name: formData.fullName,
                 Email: formData.email,
                 Department: formData.department

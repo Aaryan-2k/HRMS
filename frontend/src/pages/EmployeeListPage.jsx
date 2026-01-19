@@ -31,7 +31,7 @@ export default function EmployeeList(){
     const fetchEmployees = async () => {
         try {
             setLoading(true);
-            const response = await fetch('https://backend-hrms-1.onrender.com/api/employees/');
+            const response = await fetch('http://localhost:8000/api/employees/');
             if (!response.ok) {
                 throw new Error('Failed to fetch employees');
             }
