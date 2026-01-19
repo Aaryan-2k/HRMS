@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import SideBar from '../components/SideBar';
+import Spinner from '../components/Spinner';
 
 export default function EmpAttendanceHistory(){
     const { id } = useParams();
@@ -17,7 +18,7 @@ export default function EmpAttendanceHistory(){
     const fetchEmployeeAttendanceHistory = async () => {
         try {
             setLoading(true);
-            const response = await fetch(`http://127.0.0.1:8000/api/employees/${id}/attendance/`);
+            const response = await fetch(`https://backend-hrms-1.onrender.com/api/employees/${id}/attendance/`);
             if (!response.ok) {
                 throw new Error('Failed to fetch employee attendance history');
             }
@@ -87,12 +88,7 @@ export default function EmpAttendanceHistory(){
                 <main className="flex-1 px-4 md:px-10 lg:px-40 py-8">
                     <div className="max-w-[1200px] mx-auto">
                         {loading && (
-                            <div className="flex flex-col items-center justify-center py-12">
-                                <div className="animate-spin mb-4">
-                                    <span className="material-symbols-outlined text-5xl text-primary">loading</span>
-                                </div>
-                                <p className="text-center text-[#4c6c9a] dark:text-slate-400">Loading attendance history...</p>
-                            </div>
+                            <Spinner message="Loading attendance history..." />
                         )}
 
                         {error && (

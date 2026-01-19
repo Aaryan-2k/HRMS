@@ -5,6 +5,7 @@ import EmpFilter from "../components/EmpFiler"
 import Emptable from "../components/EmpTable"
 import Pagination from "../components/Pagination"
 import EmpAddForm from "../components/EmpAddForm"
+import Spinner from "../components/Spinner"
 
 import { useState, useEffect } from "react"
 export default function EmployeeList(){
@@ -30,7 +31,7 @@ export default function EmployeeList(){
     const fetchEmployees = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://127.0.0.1:8000/api/employees/');
+            const response = await fetch('https://backend-hrms-1.onrender.com/api/employees/');
             if (!response.ok) {
                 throw new Error('Failed to fetch employees');
             }
@@ -97,12 +98,7 @@ export default function EmployeeList(){
                         onSearch={handleSearch}
                     ></EmpFilter>
                     {loading && (
-                        <div className="flex flex-col items-center justify-center py-12">
-                            <div className="animate-spin mb-4">
-                                <span className="material-symbols-outlined text-5xl text-primary">loading</span>
-                            </div>
-                            <p className="text-center text-[#4c6c9a] dark:text-slate-400">Loading employees...</p>
-                        </div>
+                        <Spinner message="Loading employees..." />
                     )}
                     {error && <p className="text-center py-8 text-red-500">Error: {error}</p>}
                     {!loading && !error && (

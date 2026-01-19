@@ -54,7 +54,7 @@ export default function EmpAddForm({isOpen,onClose}){
         
         setLoading(true);
         try{
-            const response = await axios.post('http://127.0.0.1:8000/api/employees/', {
+            const response = await axios.post('https://backend-hrms-1.onrender.com/api/employees/', {
                 Full_name: formData.fullName,
                 Email: formData.email,
                 Department: formData.department
@@ -152,8 +152,15 @@ export default function EmpAddForm({isOpen,onClose}){
               <button 
                 type="submit" 
                 disabled={loading}
-                className="flex-1 bg-primary text-white font-bold h-11 rounded-lg hover:bg-primary/90 disabled:opacity-50 transition-colors">
-                {loading ? 'Creating...' : 'Create Employee'}
+                className="flex-1 bg-primary text-white font-bold h-11 rounded-lg hover:bg-primary/90 disabled:opacity-60 disabled:cursor-not-allowed transition-colors flex items-center justify-center gap-2">
+                {loading ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    <span>Creating...</span>
+                  </>
+                ) : (
+                  'Create Employee'
+                )}
               </button>
               <button 
                 type="button"

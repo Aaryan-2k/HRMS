@@ -5,6 +5,7 @@ import SideBar from '../components/SideBar';
 import Stats from '../components/Stats';
 import Calendar from '../components/Calendar';
 import Pagination from '../components/Pagination';
+import Spinner from '../components/Spinner';
 
 export default function AttendancePage(){
     const [selectedDate, setSelectedDate] = useState(new Date());
@@ -37,7 +38,7 @@ export default function AttendancePage(){
     const fetchEmployees = async () => {
         try {
             setLoading(true);
-            const response = await fetch('http://127.0.0.1:8000/api/employees/');
+            const response = await fetch('https://backend-hrms-1.onrender.com/api/employees/');
             if (!response.ok) {
                 throw new Error('Failed to fetch employees');
             }
@@ -63,7 +64,7 @@ export default function AttendancePage(){
             const day = String(date.getDate()).padStart(2, '0');
             const dateStr = `${year}-${month}-${day}`;
             
-            const response = await fetch(`http://127.0.0.1:8000/api/attendance/by-date/?date=${dateStr}`);
+            const response = await fetch(`https://backend-hrms-1.onrender.com/api/attendance/by-date/?date=${dateStr}`);
             const savedAttendance = await response.json();
             
             const attendanceMap = {};
@@ -158,7 +159,7 @@ export default function AttendancePage(){
 
             console.log('Sending changed records:', attendanceData);
 
-            const response = await fetch('http://127.0.0.1:8000/api/attendance/', {
+            const response = await fetch('https://backend-hrms-1.onrender.com/api/attendance/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -285,12 +286,7 @@ export default function AttendancePage(){
                                     </div>
                                     <div className="overflow-x-auto">
                                         {loading && (
-                                            <div className="flex flex-col items-center justify-center py-12">
-                                                <div className="animate-spin mb-4">
-                                                    <span className="material-symbols-outlined text-5xl text-primary">loading</span>
-                                                </div>
-                                                <p className="text-center text-[#4c6c9a] dark:text-slate-400">Loading attendance records...</p>
-                                            </div>
+                                            <Spinner message="Loading attendance records..." />
                                         )}
                                         {error && <p className="text-center py-8 text-red-500">Error: {error}</p>}
                                         {!loading && !error && (
